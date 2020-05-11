@@ -82,7 +82,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Dagger1" type="TextureRect" parent="UI/WeaponMenu"]
+[node name="DaggerScore" type="Control" parent="UI/WeaponMenu"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dagger1" type="TextureRect" parent="UI/WeaponMenu/DaggerScore"]
 margin_left = 294.0
 margin_top = 5.99988
 margin_right = 334.0
@@ -94,7 +101,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Dagger2" type="TextureRect" parent="UI/WeaponMenu"]
+[node name="Dagger2" type="TextureRect" parent="UI/WeaponMenu/DaggerScore"]
 margin_left = 300.0
 margin_top = 6.0
 margin_right = 340.0
@@ -106,7 +113,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Dagger3" type="TextureRect" parent="UI/WeaponMenu"]
+[node name="Dagger3" type="TextureRect" parent="UI/WeaponMenu/DaggerScore"]
 margin_left = 306.0
 margin_top = 5.99988
 margin_right = 346.0
@@ -118,7 +125,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Dagger4" type="TextureRect" parent="UI/WeaponMenu"]
+[node name="Dagger4" type="TextureRect" parent="UI/WeaponMenu/DaggerScore"]
 margin_left = 312.0
 margin_top = 5.99988
 margin_right = 352.0
@@ -130,7 +137,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Dagger5" type="TextureRect" parent="UI/WeaponMenu"]
+[node name="Dagger5" type="TextureRect" parent="UI/WeaponMenu/DaggerScore"]
 margin_left = 318.0
 margin_top = 5.99988
 margin_right = 358.0
@@ -142,7 +149,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Dagger6" type="TextureRect" parent="UI/WeaponMenu"]
+[node name="Dagger6" type="TextureRect" parent="UI/WeaponMenu/DaggerScore"]
 margin_left = 294.0
 margin_top = 12.0
 margin_right = 334.0
@@ -154,7 +161,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Dagger7" type="TextureRect" parent="UI/WeaponMenu"]
+[node name="Dagger7" type="TextureRect" parent="UI/WeaponMenu/DaggerScore"]
 margin_left = 300.0
 margin_top = 11.9999
 margin_right = 340.0
@@ -166,7 +173,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Dagger8" type="TextureRect" parent="UI/WeaponMenu"]
+[node name="Dagger8" type="TextureRect" parent="UI/WeaponMenu/DaggerScore"]
 margin_left = 306.0
 margin_top = 11.9999
 margin_right = 346.0
@@ -178,7 +185,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Dagger9" type="TextureRect" parent="UI/WeaponMenu"]
+[node name="Dagger9" type="TextureRect" parent="UI/WeaponMenu/DaggerScore"]
 margin_left = 312.0
 margin_top = 11.9999
 margin_right = 352.0
@@ -190,7 +197,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Dagger10" type="TextureRect" parent="UI/WeaponMenu"]
+[node name="Dagger10" type="TextureRect" parent="UI/WeaponMenu/DaggerScore"]
 margin_left = 318.0
 margin_top = 11.9999
 margin_right = 358.0
