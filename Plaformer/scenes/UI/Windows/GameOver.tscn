@@ -1,20 +1,18 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/UI/Windows/GameOver.gd" type="Script" id=1]
-
+[ext_resource path="res://Theme/first.tres" type="Theme" id=2]
+[ext_resource path="res://art/world/Sky.png" type="Texture" id=3]
+[ext_resource path="res://scenes/world/TileMap/TileMap.tscn" type="PackedScene" id=4]
+[ext_resource path="res://art/characters/Enemys/bösermagier.png" type="Texture" id=5]
+[ext_resource path="res://art/characters/player/purbleMainIdle.png" type="Texture" id=6]
+[ext_resource path="res://art/weapon/swordcentered.png" type="Texture" id=7]
 
 [node name="GameOver" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 2 )
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect" type="ColorRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -28,20 +26,101 @@ margin_right = 360.0
 margin_bottom = 200.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
-margin_left = 138.0
-margin_top = 81.0
-margin_right = 221.0
-margin_bottom = 119.0
+margin_left = 155.0
+margin_top = 86.0
+margin_right = 205.0
+margin_bottom = 114.0
 
 [node name="Label" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer"]
 modulate = Color( 1, 0, 0, 1 )
-margin_right = 83.0
-margin_bottom = 14.0
+margin_right = 50.0
+margin_bottom = 10.0
 text = "Game Over"
 
 [node name="MainMenu" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
-margin_top = 18.0
-margin_right = 83.0
-margin_bottom = 38.0
+margin_top = 14.0
+margin_right = 50.0
+margin_bottom = 28.0
 text = "Main Menu"
+
+[node name="Background" type="Node" parent="."]
+
+[node name="TileMap" parent="Background" instance=ExtResource( 4 )]
+tile_data = PoolIntArray( 327685, 1, 0, 327686, 1, 0, 393221, 3, 0, 393222, 3, 0, 458757, 3, 0, 458758, 3, 0, 458765, 1, 0, 458766, 1, 0, 524293, 3, 0, 524294, 3, 0, 524301, 4, 0, 524302, 4, 0, 589829, 3, 0, 589830, 3, 0, 589837, 4, 0, 589838, 4, 0, 655360, 1, 0, 655361, 1, 0, 655362, 1, 0, 655363, 1, 0, 655364, 1, 0, 655365, 1, 0, 655366, 1, 0, 655367, 1, 0, 655368, 1, 0, 655369, 1, 0, 655370, 1, 0, 655371, 1, 0, 655372, 1, 0, 655373, 1, 0, 655374, 1, 0, 655375, 1, 0, 655376, 1, 0, 655377, 1, 0, 655378, 1, 0, 655379, 1, 0, 655380, 1, 0, 655381, 1, 0, 655382, 1, 0, 720896, 3, 0, 720897, 3, 0, 720898, 3, 0, 720899, 3, 0, 720900, 3, 0, 720901, 3, 0, 720902, 3, 0, 720903, 3, 0, 720904, 3, 0, 720905, 3, 0, 720906, 3, 0, 720907, 3, 0, 720908, 3, 0, 720909, 3, 0, 720910, 3, 0, 720911, 3, 0, 720912, 3, 0, 720913, 3, 0, 720914, 3, 0, 720915, 3, 0, 720916, 3, 0, 720917, 3, 0, 720918, 3, 0, 786432, 3, 0, 786433, 3, 0, 786434, 3, 0, 786435, 3, 0, 786436, 3, 0, 786437, 3, 0, 786438, 3, 0, 786439, 3, 0, 786440, 3, 0, 786441, 3, 0, 786442, 3, 0, 786443, 3, 0, 786444, 3, 0, 786445, 3, 0, 786446, 3, 0, 786447, 3, 0, 786448, 3, 0, 786449, 3, 0, 786450, 3, 0, 786451, 3, 0, 786452, 3, 0, 786453, 3, 0, 786454, 3, 0 )
+
+[node name="Sprite" type="Sprite" parent="Background"]
+position = Vector2( 173.5, 155.212 )
+rotation = -1.5708
+texture = ExtResource( 6 )
+
+[node name="Sprite2" type="Sprite" parent="Background"]
+position = Vector2( 208, 152 )
+texture = ExtResource( 5 )
+
+[node name="Sprite13" type="Sprite" parent="Background"]
+position = Vector2( 216, 104 )
+texture = ExtResource( 5 )
+
+[node name="Sprite14" type="Sprite" parent="Background"]
+position = Vector2( 224, 104 )
+texture = ExtResource( 5 )
+
+[node name="Sprite3" type="Sprite" parent="Background"]
+position = Vector2( 240, 152 )
+texture = ExtResource( 5 )
+
+[node name="Sprite9" type="Sprite" parent="Background"]
+position = Vector2( 280, 152 )
+texture = ExtResource( 5 )
+
+[node name="Sprite10" type="Sprite" parent="Background"]
+position = Vector2( 312, 152 )
+texture = ExtResource( 5 )
+
+[node name="Sprite11" type="Sprite" parent="Background"]
+position = Vector2( 320, 152 )
+texture = ExtResource( 5 )
+
+[node name="Sprite4" type="Sprite" parent="Background"]
+position = Vector2( 144, 152 )
+texture = ExtResource( 5 )
+flip_h = true
+
+[node name="Sprite5" type="Sprite" parent="Background"]
+position = Vector2( 112, 152 )
+texture = ExtResource( 5 )
+flip_h = true
+
+[node name="Sprite6" type="Sprite" parent="Background"]
+position = Vector2( 72, 152 )
+texture = ExtResource( 5 )
+flip_h = true
+
+[node name="Sprite7" type="Sprite" parent="Background"]
+position = Vector2( 40, 152 )
+texture = ExtResource( 5 )
+flip_h = true
+
+[node name="Sprite8" type="Sprite" parent="Background"]
+position = Vector2( 0, 152 )
+texture = ExtResource( 5 )
+flip_h = true
+
+[node name="Sprite12" type="Sprite" parent="Background"]
+position = Vector2( 104, 72 )
+texture = ExtResource( 5 )
+flip_h = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Background"]
+
+[node name="Sprite" type="Sprite" parent="Background/ParallaxBackground"]
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Sprite2" type="Sprite" parent="Background/ParallaxBackground"]
+position = Vector2( 173.43, 148.464 )
+rotation = 0.174533
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 7 )
+flip_v = true
 [connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/MainMenu" to="." method="_on_MainMenu_pressed"]

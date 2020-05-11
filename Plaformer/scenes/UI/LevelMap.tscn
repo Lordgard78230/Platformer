@@ -1,10 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/UI/LevelMap.gd" type="Script" id=1]
+[ext_resource path="res://Theme/first.tres" type="Theme" id=2]
+[ext_resource path="res://scenes/world/TileMap/TileMap.tscn" type="PackedScene" id=3]
+[ext_resource path="res://art/world/Sky.png" type="Texture" id=4]
+[ext_resource path="res://art/weapon/swordcentered.png" type="Texture" id=5]
 
 [node name="LevelMap" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 2 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -22,33 +27,51 @@ margin_right = 360.0
 margin_bottom = 200.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
-margin_left = 138.0
-margin_top = 66.0
-margin_right = 221.0
-margin_bottom = 134.0
+margin_left = 155.0
+margin_top = 75.0
+margin_right = 205.0
+margin_bottom = 125.0
 
 [node name="Level1" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
-margin_right = 83.0
-margin_bottom = 20.0
+margin_right = 50.0
+margin_bottom = 14.0
 text = "Level 1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Level2" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
-margin_top = 24.0
-margin_right = 83.0
-margin_bottom = 44.0
+margin_top = 18.0
+margin_right = 50.0
+margin_bottom = 32.0
 text = "Level 2"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Main Menu" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
-margin_top = 48.0
-margin_right = 83.0
-margin_bottom = 68.0
+margin_top = 36.0
+margin_right = 50.0
+margin_bottom = 50.0
 text = "Main Menu"
+
+[node name="Background" type="Node" parent="."]
+
+[node name="TileMap" parent="Background" instance=ExtResource( 3 )]
+tile_data = PoolIntArray( 655361, 1, 0, 655362, 1, 0, 720897, 3, 0, 720898, 3, 0, 786432, 1, 0, 786433, 1, 0, 786434, 1, 0, 786435, 1, 0, 786436, 1, 0, 786437, 1, 0, 786438, 1, 0, 786439, 1, 0, 786440, 1, 0, 786441, 1, 0, 786442, 1, 0, 786443, 1, 0, 786444, 1, 0, 786445, 1, 0, 786446, 1, 0, 786447, 1, 0, 786448, 1, 0, 786449, 1, 0, 786450, 1, 0, 786451, 1, 0, 786452, 1, 0, 786453, 1, 0, 786454, 1, 0 )
+
+[node name="Sprite2" type="Sprite" parent="Background"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Background"]
+
+[node name="Sprite3" type="Sprite" parent="Background/ParallaxBackground"]
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Sprite" type="Sprite" parent="Background/ParallaxBackground"]
+position = Vector2( 32, 144 )
+texture = ExtResource( 5 )
+flip_v = true
 [connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Level1" to="." method="_on_Level1_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Level2" to="." method="_on_Level2_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Main Menu" to="." method="_on_Main_Menu_pressed"]
