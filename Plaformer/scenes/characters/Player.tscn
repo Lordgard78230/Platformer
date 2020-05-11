@@ -48,6 +48,7 @@ __meta__ = {
 }
 
 [node name="PauseMenu" parent="UI" instance=ExtResource( 10 )]
+visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 5.0

@@ -8,8 +8,8 @@ onready var dagger_timer = $Timer/DaggerTimer
 onready var hero_sword_timer = $Timer/HeroSwordTimer
 
 var can_shoot := true
-var player_health : int = 100
-var dagger_number := 0
+var player_health : float = 100
+var dagger_number : float = 0
 var weapon_choice : int
 
 
@@ -266,7 +266,6 @@ func die():
 	queue_free()
 	get_tree().change_scene("res://scenes/UI/Windows/GameOver.tscn")
 
-
 func weapon_equiped():
 	if Input.is_action_just_pressed("one"):
 		weapon_choice = 1
@@ -288,7 +287,6 @@ func weapon_equiped():
 		weapon_choice = 9
 
 func hero_sword_attack():#sword attack
-	var frame : int
 	if Input.is_action_just_pressed("left mouse button"):
 		if $Sprite.flip_h == false:
 			$HeroSword/AnimatedSprite.play()
@@ -318,5 +316,4 @@ func attack():
 			dagger_deacrease()
 	elif weapon_choice == 2:
 			hero_sword_attack()
-
 
