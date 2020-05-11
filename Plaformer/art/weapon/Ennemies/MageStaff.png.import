@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/backHealth.png-0cfb7d10707036e6a04b45f4f1021b35.stex"
+path="res://.import/MageStaff.png-95921d141d64376434805f3bbf7ce8c9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/UI/Lifebar/backHealth.png"
-dest_files=[ "res://.import/backHealth.png-0cfb7d10707036e6a04b45f4f1021b35.stex" ]
+source_file="res://art/weapon/Ennemies/MageStaff.png"
+dest_files=[ "res://.import/MageStaff.png-95921d141d64376434805f3bbf7ce8c9.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Fireball.png-7084f5a0dcef3cd73646b224af277877.stex"
+path="res://.import/Over.png-651c906f557e1759a7db0d65b4712d10.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/weapon/Fireball.png"
-dest_files=[ "res://.import/Fireball.png-7084f5a0dcef3cd73646b224af277877.stex" ]
+source_file="res://art/UI/Lifebar/Over.png"
+dest_files=[ "res://.import/Over.png-651c906f557e1759a7db0d65b4712d10.stex" ]
 
 [params]
 

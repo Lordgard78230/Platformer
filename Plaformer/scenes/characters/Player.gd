@@ -121,10 +121,50 @@ func sprite_direction(velocity: Vector2, direction):
 		$Sprite.play("Run")
 
 
+func weapon_equiped():
+	if Input.is_action_just_pressed("one"):
+		weapon_choice = 1
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.120)
+	elif Input.is_action_just_pressed("two"):
+		weapon_choice = 2
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.120)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("three"):
+		weapon_choice = 3
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("four"):
+		weapon_choice = 4
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("five"):
+		weapon_choice = 5
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("six"):
+		weapon_choice = 6
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("seven"):
+		weapon_choice = 7
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("eight"):
+		weapon_choice = 8
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("nine"):
+		weapon_choice = 9
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+
+
+
 func dagger_position():
-	if weapon_choice  != 1:
+	if weapon_choice  != 2:
 		$DaggerSprite.hide()
-	if weapon_choice  == 1 and dagger_number != 0:
+	if weapon_choice  == 2 and dagger_number != 0:
 		$DaggerSprite.show()
 
 func dagger_fire():
@@ -262,29 +302,7 @@ func dagger_number():
 		$UI/WeaponMenu/DaggerScore/Dagger9.hide()
 		$UI/WeaponMenu/DaggerScore/Dagger10.hide()
 
-func die():
-	queue_free()
-	get_tree().change_scene("res://scenes/UI/Windows/GameOver.tscn")
 
-func weapon_equiped():
-	if Input.is_action_just_pressed("one"):
-		weapon_choice = 1
-	elif Input.is_action_just_pressed("two"):
-		weapon_choice = 2
-	elif Input.is_action_just_pressed("three"):
-		weapon_choice = 3
-	elif Input.is_action_just_pressed("four"):
-		weapon_choice = 4
-	elif Input.is_action_just_pressed("five"):
-		weapon_choice = 5
-	elif Input.is_action_just_pressed("six"):
-		weapon_choice = 6
-	elif Input.is_action_just_pressed("seven"):
-		weapon_choice = 7
-	elif Input.is_action_just_pressed("eight"):
-		weapon_choice = 8
-	elif Input.is_action_just_pressed("nine"):
-		weapon_choice = 9
 
 func hero_sword_attack():#sword attack
 	if Input.is_action_just_pressed("left mouse button"):
@@ -297,11 +315,11 @@ func hero_sword_attack():#sword attack
 		hero_sword_timer.start()
 
 func hero_sword_position():
-	if weapon_choice != 2:
+	if weapon_choice != 1:
 		$HeroSword.hide()
 		$HeroSword2.hide()
 		
-	elif weapon_choice == 2:
+	elif weapon_choice == 1:
 		if $Sprite.flip_h == false:
 			$HeroSword.show()
 			$HeroSword2.hide()
@@ -309,11 +327,19 @@ func hero_sword_position():
 			$HeroSword.hide()
 			$HeroSword2.show()
 
+
+
+
 func attack():
-	if can_shoot == true and dagger_number > 0 and weapon_choice == 1:
+	if can_shoot == true and dagger_number > 0 and weapon_choice == 2:
 		if Input.is_action_just_pressed("left mouse button"):
 			dagger_fire()
 			dagger_deacrease()
-	elif weapon_choice == 2:
+	elif weapon_choice == 1:
 			hero_sword_attack()
 
+
+
+func die():
+	queue_free()
+	get_tree().change_scene("res://scenes/UI/Windows/GameOver.tscn")

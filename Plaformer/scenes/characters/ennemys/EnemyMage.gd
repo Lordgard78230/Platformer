@@ -27,7 +27,7 @@ func _on_KillDetector_area_entered(area: Area2D):
 	
 
 
-func _on_Detection_body_entered(_body: Node) -> void:
+func _on_Detection_body_entered(body: Node) -> void:
 	should_shoot = true
 
 
