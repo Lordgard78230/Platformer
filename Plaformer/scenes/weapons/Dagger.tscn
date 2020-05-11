@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://art/weapon/dagger2.png" type="Texture" id=1]
+[ext_resource path="res://scenes/weapons/Dagger.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 3.48673, 0.909677 )
+
+[node name="Dagger" type="Area2D"]
+collision_layer = 16
+collision_mask = 10
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 1.45527, 0.0862148 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.947975, 0.0394983 )
+shape = SubResource( 1 )
+
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
+[connection signal="area_entered" from="." to="." method="_on_Dagger_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_Dagger_body_entered"]
+[connection signal="screen_exited" from="VisibilityEnabler2D" to="." method="_on_VisibilityEnabler2D_screen_exited"]

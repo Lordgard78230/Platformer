@@ -1,0 +1,269 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://art/characters/player/purbleMainIdle.png" type="Texture" id=1]
+[ext_resource path="res://scenes/characters/Player.gd" type="Script" id=2]
+[ext_resource path="res://art/characters/player/PurpleMainFrame2.png" type="Texture" id=3]
+[ext_resource path="res://art/characters/player/PurpleMainFrame1.png" type="Texture" id=4]
+[ext_resource path="res://art/weapon/dagger2.png" type="Texture" id=5]
+[ext_resource path="res://art/world/Sky.png" type="Texture" id=6]
+[ext_resource path="res://art/UI/Lifebar/current health.png" type="Texture" id=7]
+[ext_resource path="res://art/UI/Lifebar/backHealth.png" type="Texture" id=8]
+[ext_resource path="res://scenes/weapons/Hero/sword_lance/HeroSword.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/UI/Windows/PauseMenu.tscn" type="PackedScene" id=10]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "Run",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 5.08072, 7.68702 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 10.0334, 10.3747 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 5.64077, 8.34889 )
+
+[node name="Player" type="KinematicBody2D"]
+collision_layer = 1025
+collision_mask = 40
+script = ExtResource( 2 )
+
+[node name="UI" type="Control" parent="."]
+margin_left = -180.0
+margin_top = -150.0
+margin_right = 180.0
+margin_bottom = 48.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseMenu" parent="UI" instance=ExtResource( 10 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 355.0
+margin_bottom = 193.0
+
+[node name="HealthBar" type="TextureProgress" parent="UI"]
+modulate = Color( 0.278431, 0.984314, 0.0392157, 1 )
+margin_left = 18.0
+margin_right = 50.0
+margin_bottom = 16.0
+texture_under = ExtResource( 8 )
+texture_progress = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Pause" type="Button" parent="UI"]
+margin_left = 150.0
+margin_top = 5.0
+margin_right = 200.0
+margin_bottom = 25.0
+text = "Pause"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WeaponMenu" type="Control" parent="UI"]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dagger1" type="TextureRect" parent="UI/WeaponMenu"]
+margin_left = 294.0
+margin_top = 5.99988
+margin_right = 334.0
+margin_bottom = 45.9999
+rect_rotation = 90.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dagger2" type="TextureRect" parent="UI/WeaponMenu"]
+margin_left = 300.0
+margin_top = 6.0
+margin_right = 340.0
+margin_bottom = 46.0
+rect_rotation = 90.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dagger3" type="TextureRect" parent="UI/WeaponMenu"]
+margin_left = 306.0
+margin_top = 5.99988
+margin_right = 346.0
+margin_bottom = 45.9999
+rect_rotation = 90.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dagger4" type="TextureRect" parent="UI/WeaponMenu"]
+margin_left = 312.0
+margin_top = 5.99988
+margin_right = 352.0
+margin_bottom = 45.9999
+rect_rotation = 90.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dagger5" type="TextureRect" parent="UI/WeaponMenu"]
+margin_left = 318.0
+margin_top = 5.99988
+margin_right = 358.0
+margin_bottom = 45.9999
+rect_rotation = 90.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dagger6" type="TextureRect" parent="UI/WeaponMenu"]
+margin_left = 294.0
+margin_top = 12.0
+margin_right = 334.0
+margin_bottom = 52.0
+rect_rotation = 90.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dagger7" type="TextureRect" parent="UI/WeaponMenu"]
+margin_left = 300.0
+margin_top = 11.9999
+margin_right = 340.0
+margin_bottom = 51.9999
+rect_rotation = 90.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dagger8" type="TextureRect" parent="UI/WeaponMenu"]
+margin_left = 306.0
+margin_top = 11.9999
+margin_right = 346.0
+margin_bottom = 51.9999
+rect_rotation = 90.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dagger9" type="TextureRect" parent="UI/WeaponMenu"]
+margin_left = 312.0
+margin_top = 11.9999
+margin_right = 352.0
+margin_bottom = 51.9999
+rect_rotation = 90.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dagger10" type="TextureRect" parent="UI/WeaponMenu"]
+margin_left = 318.0
+margin_top = 11.9999
+margin_right = 358.0
+margin_bottom = 51.9999
+rect_rotation = 90.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "Run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 0, 0.262599 )
+shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -51.5348 )
+current = true
+
+[node name="enemyDetector" type="Area2D" parent="."]
+visible = false
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemyDetector"]
+self_modulate = Color( 0.266667, 0.00392157, 1, 1 )
+scale = Vector2( 0.55, 0.8 )
+shape = SubResource( 3 )
+
+[node name="DaggerSpawnPosition" type="Position2D" parent="."]
+position = Vector2( 0, 1.794 )
+
+[node name="DaggerSprite" type="Sprite" parent="."]
+position = Vector2( 0, 1.794 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 5 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.1, 0.1 )
+motion_mirroring = Vector2( 640, 640 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource( 6 )
+centered = false
+
+[node name="PickUpArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea"]
+visible = false
+modulate = Color( 0.027451, 0.027451, 0.027451, 1 )
+shape = SubResource( 4 )
+
+[node name="HeroSword" parent="." instance=ExtResource( 9 )]
+position = Vector2( 5.10835, 0 )
+
+[node name="HeroSword2" parent="." instance=ExtResource( 9 )]
+position = Vector2( -16.8881, 0.170515 )
+
+[node name="Timer" type="Node" parent="."]
+
+[node name="DaggerTimer" type="Timer" parent="Timer"]
+
+[node name="HeroSwordTimer" type="Timer" parent="Timer"]
+[connection signal="pressed" from="UI/Pause" to="." method="_on_Pause_pressed"]
+[connection signal="area_entered" from="enemyDetector" to="." method="_on_enemyDetector_area_entered"]
+[connection signal="area_entered" from="PickUpArea" to="." method="_on_PickUpArea_area_entered"]
+[connection signal="timeout" from="Timer/DaggerTimer" to="." method="_on_DaggerTimer_timeout"]
+[connection signal="timeout" from="Timer/HeroSwordTimer" to="." method="_on_HeroSwordTimer_timeout"]

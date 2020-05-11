@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/UI/MainScreen.gd" type="Script" id=1]
+
+[node name="MainScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
+margin_right = 360.0
+margin_bottom = 200.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
+margin_left = 141.0
+margin_top = 66.0
+margin_right = 219.0
+margin_bottom = 134.0
+
+[node name="StartButton" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
+margin_right = 78.0
+margin_bottom = 20.0
+text = "Start"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelMap" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 78.0
+margin_bottom = 44.0
+text = "Level map"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitButton" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
+margin_top = 48.0
+margin_right = 78.0
+margin_bottom = 68.0
+text = "Exit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/LevelMap" to="." method="_on_LevelMap_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
