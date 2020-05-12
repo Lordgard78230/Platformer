@@ -8,18 +8,26 @@ const UP = Vector2(0, -1)
 const SLOPE_STOP = 64
 
 onready var raycasts = $Raycasts
+onready var raycasts_sides= $RaycastsSide
+
+
 onready var dagger_timer = $Timer/DaggerTimer
 onready var hero_sword_timer = $Timer/HeroSwordTimer
+
 
 var gravity 
 var can_shoot := true
 var player_health : float = 100
 var dagger_number : float = 0
-var move_speed = 5 * 16
+var move_speed = 8 * 16
 var player_velocity = Vector2(0,0)
 var weapon_choice : int
+var on_wall = false
+
 var is_grounded
 var is_jumping = false
+var jump_count = 0
+
 
 var max_jump_velocity
 var min_jump_velocity
@@ -65,39 +73,29 @@ func _on_enemyDetector_area_entered(area: Area2D) -> void:
 
 func _physics_process(delta: float) -> void:
 	_get_input()
-	is_grounded = !is_jumping && _check_is_grounded()
-	if is_jumping && player_velocity.y >= 0:
-		is_jumping = false
-	player_velocity.y += gravity * delta
-	player_velocity = move_and_slide(player_velocity, UP, SLOPE_STOP)
 	
+	apply_gravity(delta)
 	
+	movement()
+	
+	check_on_wall()
 	
 	animation()
 	
-	
-	#dagger
-	dagger_number = min(dagger_number, 10)
 	dagger_number()
 	
-	
-	#weapon choice
 	weapon_equiped()
+	
 	weapon_show()
 	
-	#attack
 	attack()
 	
-	#updates health and kills play if player_health == 0
-	$UI/HealthBar.value = player_health 
-	player_health = $UI/HealthBar.value 
-	player_health = min(player_health, 100)
-	if player_health == 0:
-		die()
+	health_update()
 
 
 
-
+func apply_gravity(delta):
+	player_velocity.y += gravity * delta
 
 func _get_input():
 	var move_direction = -int(Input.is_action_pressed("move_left")) + int(Input.is_action_pressed("move_right"))
@@ -106,20 +104,38 @@ func _get_input():
 		$Body.scale.x = move_direction
 
 func _input(event: InputEvent) -> void: #jump
-	if event.is_action_pressed("jump") && is_grounded:
+	if event.is_action_pressed("jump") && (jump_count == 0 or jump_count == 1):
 		player_velocity.y = max_jump_velocity
 		is_jumping = true
+		jump_count += 1
 		
 	#if event.is_action_released("jump") && player_velocity.y < -20:#jump stop
 		#player_velocity.y = min_jump_velocity
+
+func movement():
+	
+	is_grounded = !is_jumping && _check_is_grounded()
+	if is_jumping && player_velocity.y >= 0:
+		is_jumping = false
+	player_velocity = move_and_slide(player_velocity, UP, SLOPE_STOP)
+
 
 
 func _check_is_grounded():
 	for raycast in raycasts.get_children():
 		if raycast.is_colliding():
+			jump_count = 0
 			return true
 			
 	return false
+
+func check_on_wall():
+	for raycast in raycasts_sides.get_children():
+		if raycast.is_colliding():
+			jump_count = 0
+
+
+
 
 func _get_h_weight():
 	return 0.2 if is_grounded else 0.1
@@ -274,7 +290,7 @@ func dagger_number():
 		$UI/WeaponMenu/DaggerScore/Dagger8.hide()
 		$UI/WeaponMenu/DaggerScore/Dagger9.hide()
 		$UI/WeaponMenu/DaggerScore/Dagger10.hide()
-
+	dagger_number = min(dagger_number, 10)
 
 
 func weapon_equiped():
@@ -360,7 +376,12 @@ func attack():
 	elif weapon_choice == 1:
 			hero_sword_attack()
 
-
+func health_update():
+	$UI/HealthBar.value = player_health 
+	player_health = $UI/HealthBar.value 
+	player_health = min(player_health, 100)
+	if player_health == 0:
+		die()
 
 func die():
 	queue_free()

@@ -345,6 +345,54 @@ scale = Vector2( 0.5, 0.5 )
 enabled = true
 cast_to = Vector2( 0, 20 )
 collision_mask = 8
+
+[node name="RaycastsSide" type="Node2D" parent="."]
+
+[node name="RayCast2DLeft1" type="RayCast2D" parent="RaycastsSide"]
+position = Vector2( 0, -5.08646 )
+rotation = 1.5708
+scale = Vector2( 0.5, 0.5 )
+enabled = true
+cast_to = Vector2( 0, 15 )
+collision_mask = 8
+
+[node name="RayCast2DLeft2" type="RayCast2D" parent="RaycastsSide"]
+rotation = 1.5708
+scale = Vector2( 0.5, 0.5 )
+enabled = true
+cast_to = Vector2( 0, 15 )
+collision_mask = 8
+
+[node name="RayCast2DLeft3" type="RayCast2D" parent="RaycastsSide"]
+position = Vector2( 0, 5.794 )
+rotation = 1.5708
+scale = Vector2( 0.5, 0.5 )
+enabled = true
+cast_to = Vector2( 0, 15 )
+collision_mask = 8
+
+[node name="RayCast2DRight1" type="RayCast2D" parent="RaycastsSide"]
+position = Vector2( 0, -5.08646 )
+rotation = -1.5708
+scale = Vector2( 0.5, 0.5 )
+enabled = true
+cast_to = Vector2( 0, 15 )
+collision_mask = 8
+
+[node name="RayCast2DRight2" type="RayCast2D" parent="RaycastsSide"]
+rotation = -1.5708
+scale = Vector2( 0.5, 0.5 )
+enabled = true
+cast_to = Vector2( 0, 15 )
+collision_mask = 8
+
+[node name="RayCast2DRight3" type="RayCast2D" parent="RaycastsSide"]
+position = Vector2( 0, 5.794 )
+rotation = -1.5708
+scale = Vector2( 0.5, 0.5 )
+enabled = true
+cast_to = Vector2( 0, 15 )
+collision_mask = 8
 [connection signal="pressed" from="UI/Pause" to="." method="_on_Pause_pressed"]
 [connection signal="area_entered" from="enemyDetector" to="." method="_on_enemyDetector_area_entered"]
 [connection signal="area_entered" from="PickUpArea" to="." method="_on_PickUpArea_area_entered"]
