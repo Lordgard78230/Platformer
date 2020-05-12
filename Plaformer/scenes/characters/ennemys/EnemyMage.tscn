@@ -78,6 +78,12 @@ collision_mask = 1024
 shape = SubResource( 3 )
 
 [node name="FireballTimer" type="Timer" parent="."]
+
+[node name="Raycasts" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="Raycasts"]
+rotation = 1.5708
+cast_to = Vector2( 0, 100 )
 [connection signal="area_entered" from="KillDetector" to="." method="_on_KillDetector_area_entered"]
 [connection signal="body_entered" from="Detection" to="." method="_on_Detection_body_entered"]
 [connection signal="body_exited" from="Detection" to="." method="_on_Detection_body_exited"]

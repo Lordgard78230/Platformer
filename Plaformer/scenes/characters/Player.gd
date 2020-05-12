@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 
 
+
 const DAGGER = preload("res://scenes/weapons/Dagger.tscn")
 const UP = Vector2(0, -1)
 const SLOPE_STOP = 64
@@ -10,24 +11,31 @@ onready var raycasts = $Raycasts
 onready var dagger_timer = $Timer/DaggerTimer
 onready var hero_sword_timer = $Timer/HeroSwordTimer
 
+var gravity 
 var can_shoot := true
 var player_health : float = 100
 var dagger_number : float = 0
-var jump_velocity = -100
 var move_speed = 5 * 16
-var _gravity = 100
 var player_velocity = Vector2(0,0)
 var weapon_choice : int
 var is_grounded
+var is_jumping = false
 
-
+var max_jump_velocity
+var min_jump_velocity
+var max_jump_hight = 2.25 * Global.UNIT_SIZE
+var min_jump_hight = 0.8 * Global.UNIT_SIZE
+var jump_duration = 0.6
 
 func _ready() -> void:
 	dagger_timer.set_wait_time(0.5)
 	hero_sword_timer.set_wait_time(0.5)
 	$Body/HeroSword/CollisionShape2D.disabled = true
-
-
+	
+	gravity = 2 * max_jump_hight / pow(jump_duration,2)
+	max_jump_velocity = -sqrt(2 * gravity * max_jump_hight)
+	min_jump_velocity = -sqrt(2 * gravity * min_jump_hight)
+	
 
 
 
@@ -57,9 +65,12 @@ func _on_enemyDetector_area_entered(area: Area2D) -> void:
 
 func _physics_process(delta: float) -> void:
 	_get_input()
-	is_grounded = _check_is_grounded()
-	player_velocity.y += _gravity * delta
+	is_grounded = !is_jumping && _check_is_grounded()
+	if is_jumping && player_velocity.y >= 0:
+		is_jumping = false
+	player_velocity.y += gravity * delta
 	player_velocity = move_and_slide(player_velocity, UP, SLOPE_STOP)
+	
 	
 	
 	animation()
@@ -68,7 +79,6 @@ func _physics_process(delta: float) -> void:
 	#dagger
 	dagger_number = min(dagger_number, 10)
 	dagger_number()
-	
 	
 	
 	#weapon choice
@@ -97,7 +107,11 @@ func _get_input():
 
 func _input(event: InputEvent) -> void: #jump
 	if event.is_action_pressed("jump") && is_grounded:
-		player_velocity.y = jump_velocity
+		player_velocity.y = max_jump_velocity
+		is_jumping = true
+		
+	#if event.is_action_released("jump") && player_velocity.y < -20:#jump stop
+		#player_velocity.y = min_jump_velocity
 
 
 func _check_is_grounded():

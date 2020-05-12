@@ -4,12 +4,12 @@ extends Actors
 var FIREBALL = preload("res://scenes/weapons/Fireball.tscn")
 
 onready var fireball_timer = $FireballTimer
+onready var raycasts = $Raycasts
 
 var ennemy_health := 50
 var can_shoot := true
 var should_shoot := false
 var player_position
-
 var magier_max_speed = Vector2(50,0)
 var player_in_front : bool
 
@@ -29,11 +29,6 @@ func _on_KillDetector_area_entered(area: Area2D):
 
 func _on_Detection_body_entered(body: Node) -> void:
 	should_shoot = true
-
-
-
-
-
 
 func _on_Detection_body_exited(_body: Node) -> void:
 	should_shoot = false
@@ -67,8 +62,15 @@ func _physics_process(delta: float) -> void:
 		fireball_fire()
 		fireball_timer.start()
 		can_shoot = false
+	
+	#should_shoot = check_raycasts()
 
-
+#func check_raycasts():
+	#for raycast in raycasts.get_children():
+		#if raycast.is_colliding():
+			#return true
+			
+	#return false
 
 
 

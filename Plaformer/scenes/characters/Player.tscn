@@ -14,15 +14,6 @@
 [ext_resource path="res://art/UI/Pause.png" type="Texture" id=12]
 [ext_resource path="res://art/weapon/Hero/HeroSwordCentered.png" type="Texture" id=13]
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 5.08072, 7.68702 )
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 10.0334, 10.3747 )
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 5.64077, 8.34889 )
-
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 1 ) ],
@@ -35,6 +26,15 @@ animations = [ {
 "name": "Idle",
 "speed": 3.0
 } ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 5.08072, 7.68702 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 10.0334, 10.3747 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 5.64077, 8.34889 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 1025
@@ -263,6 +263,20 @@ margin_right = 32.0
 margin_bottom = 32.0
 color = Color( 0, 0, 0, 0 )
 
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Sprite" type="AnimatedSprite" parent="Body"]
+frames = SubResource( 1 )
+animation = "Run"
+
+[node name="HeroSword" parent="Body" instance=ExtResource( 9 )]
+position = Vector2( 5.10835, 0 )
+
+[node name="DaggerSprite" type="Sprite" parent="Body"]
+position = Vector2( 0, 1.794 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 5 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, 0.262599 )
@@ -315,29 +329,22 @@ shape = SubResource( 4 )
 position = Vector2( 4, 0.262599 )
 scale = Vector2( 0.5, 0.5 )
 enabled = true
-cast_to = Vector2( 0, 30 )
+cast_to = Vector2( 0, 20 )
 collision_mask = 8
 
 [node name="RayCast2D2" type="RayCast2D" parent="Raycasts"]
 position = Vector2( -4, 0.262599 )
 scale = Vector2( 0.5, 0.5 )
 enabled = true
-cast_to = Vector2( 0, 30 )
+cast_to = Vector2( 0, 20 )
 collision_mask = 8
 
-[node name="Body" type="Node2D" parent="."]
-
-[node name="Sprite" type="AnimatedSprite" parent="Body"]
-frames = SubResource( 1 )
-animation = "Run"
-
-[node name="HeroSword" parent="Body" instance=ExtResource( 9 )]
-position = Vector2( 5.10835, 0 )
-
-[node name="DaggerSprite" type="Sprite" parent="Body"]
-position = Vector2( 0, 1.794 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 5 )
+[node name="RayCast2D3" type="RayCast2D" parent="Raycasts"]
+position = Vector2( 0, 0.262599 )
+scale = Vector2( 0.5, 0.5 )
+enabled = true
+cast_to = Vector2( 0, 20 )
+collision_mask = 8
 [connection signal="pressed" from="UI/Pause" to="." method="_on_Pause_pressed"]
 [connection signal="area_entered" from="enemyDetector" to="." method="_on_enemyDetector_area_entered"]
 [connection signal="area_entered" from="PickUpArea" to="." method="_on_PickUpArea_area_entered"]
