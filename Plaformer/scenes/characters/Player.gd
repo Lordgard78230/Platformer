@@ -1,26 +1,31 @@
-extends Actors
+extends KinematicBody2D
 
 
 
 const DAGGER = preload("res://scenes/weapons/Dagger.tscn")
+const UP = Vector2(0, -1)
+const SLOPE_STOP = 64
 
+onready var raycasts = $Raycasts
 onready var dagger_timer = $Timer/DaggerTimer
 onready var hero_sword_timer = $Timer/HeroSwordTimer
 
 var can_shoot := true
 var player_health : float = 100
 var dagger_number : float = 0
+var jump_velocity = -100
+var move_speed = 5 * 16
+var _gravity = 100
+var player_velocity = Vector2(0,0)
 var weapon_choice : int
+var is_grounded
 
 
 
 func _ready() -> void:
 	dagger_timer.set_wait_time(0.5)
 	hero_sword_timer.set_wait_time(0.5)
-	$HeroSword2/AnimatedSprite.flip_h = true
-	$HeroSword/CollisionShape2D.disabled = true
-	$HeroSword2/CollisionShape2D.disabled = true
-
+	$Body/HeroSword/CollisionShape2D.disabled = true
 
 
 
@@ -33,14 +38,11 @@ func _on_Pause_pressed() -> void:
 func _on_DaggerTimer_timeout() -> void:
 	can_shoot = true
 
-
 func _on_HeroSwordTimer_timeout() -> void:
-	$HeroSword/AnimatedSprite.stop()
-	$HeroSword/AnimatedSprite.set_frame(0)
-	$HeroSword2/AnimatedSprite.stop()
-	$HeroSword2/AnimatedSprite.set_frame(0)
-	$HeroSword/CollisionShape2D.disabled = true
-	$HeroSword2/CollisionShape2D.disabled = true
+	$Body/HeroSword/AnimatedSprite.stop()
+	$Body/HeroSword/AnimatedSprite.set_frame(0)
+	$Body/HeroSword/CollisionShape2D.disabled = true
+
 
 
 func _on_PickUpArea_area_entered(area: Area2D) -> void: #increases dagger number by 1
@@ -49,128 +51,85 @@ func _on_PickUpArea_area_entered(area: Area2D) -> void: #increases dagger number
 	elif area.get_parent().name == "HealthPotion":
 		player_health += 50
 
-
 func _on_enemyDetector_area_entered(area: Area2D) -> void:
 	player_health -= area.dammage
 
 
-func _physics_process(_delta: float) -> void:
-	#var is_jump_interrupted := Input.is_action_just_released("jump") and _velocity.y < 0.0
-	var direction = get_direction()
-	_velocity = calculate_move_velocity(_velocity, direction, max_speed)
-	_velocity = move_and_slide(_velocity, FLOOR_NORMAL)
+func _physics_process(delta: float) -> void:
+	_get_input()
+	is_grounded = _check_is_grounded()
+	player_velocity.y += _gravity * delta
+	player_velocity = move_and_slide(player_velocity, UP, SLOPE_STOP)
 	
-	#sprite
-	sprite_direction(_velocity, direction)
+	
+	animation()
+	
 	
 	#dagger
 	dagger_number = min(dagger_number, 10)
 	dagger_number()
-	if dagger_number == 0:
-		$DaggerSprite.hide()
-	else:
-		$DaggerSprite.show()
 	
+	
+	
+	#weapon choice
+	weapon_equiped()
+	weapon_show()
+	
+	#attack
+	attack()
 	
 	#updates health and kills play if player_health == 0
 	$UI/HealthBar.value = player_health 
 	player_health = $UI/HealthBar.value 
+	player_health = min(player_health, 100)
 	if player_health == 0:
 		die()
-	
-	hero_sword_position()
-	dagger_position()
-	
-	#weapon choice
-	weapon_equiped()
-	
-	
-	attack()
-	
-	
-	player_health = min(player_health, 100)
-
-func get_direction() -> Vector2:
-	return Vector2(Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	, -1.0 if Input.is_action_just_pressed("jump") and is_on_floor() else 1.0)
-
-func calculate_move_velocity(linear_velocity: Vector2, direction: Vector2,max_speed: Vector2) -> Vector2:
-	var out: = linear_velocity
-	out.x = max_speed.x * direction.x 
-	out.y += gravity * get_physics_process_delta_time()
-	if direction.y == -1.0:
-		out.y = max_speed.y * direction.y
-	#if is_jump_interrupted:
-		#out.y = 0.0
-	return out 
-
-func sprite_direction(velocity: Vector2, direction):
-	if velocity.x == 0 and is_on_floor():
-		$Sprite.play("Idle")
-	elif direction.x < 0 and velocity.x != 0:
-		$Sprite.flip_h = true
-		$DaggerSprite.flip_h = true
-		$Sprite.play("Run")
-
-		
-		
-		
-	elif direction.x > 0 and velocity.x != 0:
-		$Sprite.flip_h = false
-		$DaggerSprite.flip_h = false
-		$Sprite.play("Run")
-
-
-func weapon_equiped():
-	if Input.is_action_just_pressed("one"):
-		weapon_choice = 1
-		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.120)
-	elif Input.is_action_just_pressed("two"):
-		weapon_choice = 2
-		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.120)
-		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-	elif Input.is_action_just_pressed("three"):
-		weapon_choice = 3
-		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-	elif Input.is_action_just_pressed("four"):
-		weapon_choice = 4
-		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-	elif Input.is_action_just_pressed("five"):
-		weapon_choice = 5
-		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-	elif Input.is_action_just_pressed("six"):
-		weapon_choice = 6
-		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-	elif Input.is_action_just_pressed("seven"):
-		weapon_choice = 7
-		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-	elif Input.is_action_just_pressed("eight"):
-		weapon_choice = 8
-		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-	elif Input.is_action_just_pressed("nine"):
-		weapon_choice = 9
-		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
-		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
 
 
 
-func dagger_position():
-	if weapon_choice  != 2:
-		$DaggerSprite.hide()
-	if weapon_choice  == 2 and dagger_number != 0:
-		$DaggerSprite.show()
+
+
+func _get_input():
+	var move_direction = -int(Input.is_action_pressed("move_left")) + int(Input.is_action_pressed("move_right"))
+	player_velocity.x = lerp(player_velocity.x, move_speed * move_direction, _get_h_weight())
+	if move_direction != 0:
+		$Body.scale.x = move_direction
+
+func _input(event: InputEvent) -> void: #jump
+	if event.is_action_pressed("jump") && is_grounded:
+		player_velocity.y = jump_velocity
+
+
+func _check_is_grounded():
+	for raycast in raycasts.get_children():
+		if raycast.is_colliding():
+			return true
+			
+	return false
+
+func _get_h_weight():
+	return 0.2 if is_grounded else 0.1
+
+
+func animation():
+	if player_velocity.x == 0:
+		$Body/Sprite.play("Idle")
+	elif player_velocity.x != 0:
+		$Body/Sprite.play("Run")
+
+
+func hero_sword_attack():#sword attack
+	if Input.is_action_just_pressed("left mouse button"):
+		if $Body/Sprite.flip_h == false:
+			$Body/HeroSword/AnimatedSprite.play()
+			$Body/HeroSword/CollisionShape2D.disabled = false
+		hero_sword_timer.start()
+
 
 func dagger_fire():
 	var dagger = DAGGER.instance()
 	get_parent().add_child(dagger)
-	if $DaggerSprite.flip_h == true:
+	if $Body.scale.x == -1:
 		dagger.dagger_speed *= -1
 	dagger.position = $DaggerSpawnPosition.global_position
 	dagger_timer.start()
@@ -304,29 +263,78 @@ func dagger_number():
 
 
 
-func hero_sword_attack():#sword attack
-	if Input.is_action_just_pressed("left mouse button"):
-		if $Sprite.flip_h == false:
-			$HeroSword/AnimatedSprite.play()
-			$HeroSword/CollisionShape2D.disabled = false
-		elif $Sprite.flip_h == true:
-			$HeroSword2/AnimatedSprite.play()
-			$HeroSword2/CollisionShape2D.disabled = false
-		hero_sword_timer.start()
+func weapon_equiped():
+	if Input.is_action_just_pressed("one"):
+		weapon_choice = 1
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.120)
+	elif Input.is_action_just_pressed("two"):
+		weapon_choice = 2
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.120)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("three"):
+		weapon_choice = 3
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("four"):
+		weapon_choice = 4
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("five"):
+		weapon_choice = 5
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("six"):
+		weapon_choice = 6
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("seven"):
+		weapon_choice = 7
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("eight"):
+		weapon_choice = 8
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+	elif Input.is_action_just_pressed("nine"):
+		weapon_choice = 9
+		$UI/WeaponMenu/WeaponChoice/DaggerTexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
+		$UI/WeaponMenu/WeaponChoice/HeroSwordtexture/ColorRect.color = Color(0.0,0.0,0.0,0.0)
 
-func hero_sword_position():
-	if weapon_choice != 1:
-		$HeroSword.hide()
-		$HeroSword2.hide()
-		
+func weapon_show():
+	if weapon_choice == 0:
+		$Body/HeroSword.hide()
+		$Body/DaggerSprite.hide()
 	elif weapon_choice == 1:
-		if $Sprite.flip_h == false:
-			$HeroSword.show()
-			$HeroSword2.hide()
-		elif $Sprite.flip_h == true:
-			$HeroSword.hide()
-			$HeroSword2.show()
-
+		$Body/HeroSword.show()
+		$Body/DaggerSprite.hide()
+	elif weapon_choice == 2:
+		$Body/HeroSword.hide()
+		if dagger_number != 0:
+			$Body/DaggerSprite.show()
+		else:
+			$Body/DaggerSprite.hide()
+	elif weapon_choice == 3:
+		$Body/HeroSword.show()
+		$Body/DaggerSprite.hide()
+	elif weapon_choice == 4:
+		$Body/HeroSword.show()
+		$Body/DaggerSprite.hide()
+	elif weapon_choice == 5:
+		$Body/HeroSword.show()
+		$Body/DaggerSprite.hide()
+	elif weapon_choice == 6:
+		$Body/HeroSword.show()
+		$Body/DaggerSprite.hide()
+	elif weapon_choice == 7:
+		$Body/HeroSword.show()
+		$Body/DaggerSprite.hide()
+	elif weapon_choice == 8:
+		$Body/HeroSword.show()
+		$Body/DaggerSprite.hide()
+	elif weapon_choice == 9:
+		$Body/HeroSword.show()
+		$Body/DaggerSprite.hide()
 
 
 
@@ -343,3 +351,6 @@ func attack():
 func die():
 	queue_free()
 	get_tree().change_scene("res://scenes/UI/Windows/GameOver.tscn")
+
+
+
