@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/UI/Windows/PauseMenu.gd" type="Script" id=1]
 [ext_resource path="res://Theme/first.tres" type="Theme" id=2]
+[ext_resource path="res://art/UI/Pause.png" type="Texture" id=3]
 
 [node name="PauseMenu" type="Control"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 2 )
@@ -12,22 +14,37 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Pause" type="Button" parent="."]
+visible = false
+margin_left = 160.0
+margin_right = 180.0
+margin_bottom = 20.0
+text = " "
+icon = ExtResource( 3 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 16.0
+margin_bottom = 18.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
-margin_right = 360.0
-margin_bottom = 200.0
+margin_right = 376.0
+margin_bottom = 218.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
-margin_left = 160.0
-margin_top = 84.0
-margin_right = 200.0
-margin_bottom = 116.0
+margin_left = 168.0
+margin_top = 90.0
+margin_right = 208.0
+margin_bottom = 128.0
 
 [node name="Resume" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
 margin_right = 40.0
@@ -35,9 +52,10 @@ margin_bottom = 14.0
 text = "Resume"
 
 [node name="Menu" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
-margin_top = 18.0
+margin_top = 24.0
 margin_right = 40.0
-margin_bottom = 32.0
+margin_bottom = 38.0
 text = "Menu"
+[connection signal="pressed" from="Pause" to="." method="_on_Pause_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Resume" to="." method="_on_Resume_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Menu" to="." method="_on_Menu_pressed"]
