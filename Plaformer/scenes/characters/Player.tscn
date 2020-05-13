@@ -16,15 +16,15 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 1 ) ],
-"loop": true,
-"name": "Run",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 4 ), ExtResource( 3 ) ],
 "loop": true,
 "name": "Idle",
 "speed": 3.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "Run",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -263,6 +263,14 @@ margin_right = 32.0
 margin_bottom = 32.0
 color = Color( 0, 0, 0, 0 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -51.5348 )
+current = true
+drag_margin_top = 1.0
+__meta__ = {
+"_edit_group_": true
+}
+
 [node name="Body" type="Node2D" parent="."]
 
 [node name="Sprite" type="AnimatedSprite" parent="Body"]
@@ -281,10 +289,6 @@ texture = ExtResource( 5 )
 visible = false
 position = Vector2( 0, 0.262599 )
 shape = SubResource( 2 )
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 0, -51.5348 )
-current = true
 
 [node name="enemyDetector" type="Area2D" parent="."]
 visible = false

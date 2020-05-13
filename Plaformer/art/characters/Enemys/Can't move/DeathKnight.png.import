@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/DeathKnight.png-9a8ca54025691ba698afac3e4e61117e.stex"
+path="res://.import/DeathKnight.png-37d0af717428d5b35dc99ea87ff53aac.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/characters/Enemys/DeathKnight.png"
-dest_files=[ "res://.import/DeathKnight.png-9a8ca54025691ba698afac3e4e61117e.stex" ]
+source_file="res://art/characters/Enemys/Can't move/DeathKnight.png"
+dest_files=[ "res://.import/DeathKnight.png-37d0af717428d5b35dc99ea87ff53aac.stex" ]
 
 [params]
 

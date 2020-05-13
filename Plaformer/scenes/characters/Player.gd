@@ -10,7 +10,6 @@ const SLOPE_STOP = 64
 onready var raycasts = $Raycasts
 onready var raycasts_sides= $RaycastsSide
 
-
 onready var dagger_timer = $Timer/DaggerTimer
 onready var hero_sword_timer = $Timer/HeroSwordTimer
 
@@ -118,7 +117,12 @@ func _input(event: InputEvent) -> void: #jump
 		
 	if event.is_action_released("jump") && player_velocity.y < -40:#jump stop
 		player_velocity.y = min_jump_velocity
-
+	
+	if event.is_action_pressed("down"):
+		set_collision_mask_bit(7, false)
+	else:
+		set_collision_mask_bit(7, true)
+	
 func movement():
 	is_grounded = !is_jumping && _check_is_grounded()
 	if is_jumping && player_velocity.y >= 0:
@@ -148,6 +152,7 @@ func check_on_wall():
 			jump_count = 0
 			return true
 	return false
+
 
 
 func _get_h_weight():

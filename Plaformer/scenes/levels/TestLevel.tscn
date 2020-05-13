@@ -6,6 +6,10 @@
 
 [node name="TestLevel" type="Node2D"]
 
+[node name="ennemys" type="Node" parent="."]
+
+[node name="MiniShooters" type="Node" parent="ennemys"]
+
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 144, 184 )
 

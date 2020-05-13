@@ -1,7 +1,7 @@
 extends Actors
 
 
-var FIREBALL = preload("res://scenes/weapons/Fireball.tscn")
+var FIREBALL = preload("res://scenes/weapons/Ennemys/Projectiles/Fireball.tscn")
 
 onready var fireball_timer = $FireballTimer
 onready var raycasts = $Raycasts
